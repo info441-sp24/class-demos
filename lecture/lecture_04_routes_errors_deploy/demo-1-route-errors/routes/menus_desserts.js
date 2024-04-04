@@ -10,7 +10,7 @@ router.get('/1', (req, res) => {
 })
 
 // broken endpoint, to show error 
-router.get('/2', (req, res) => {
+router.get('/2', async (req, res) => {
 
     // Fake an error to pretend our database failed or something
     throw(new Error("Loading dessert to failed!"))
@@ -19,7 +19,7 @@ router.get('/2', (req, res) => {
 })
 
 // error handling done correctly
-router.get('/3', (req, res) => {
+router.get('/3', async (req, res) => {
     try{
         // Fake an error to pretend our database failed or something
         throw(new Error("Loading dessert to failed!"))
