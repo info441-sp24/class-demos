@@ -4,7 +4,8 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
-import usersRouter from './routes/users.js';
+import models from './models.js'
+import apiV1Router from './routes/v1/apiv1.js'
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -20,6 +21,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use("/api/user", usersRouter)
+//middleware to add mongoose models to req
+app.use((req, res, next) => {
+    req.models = models
+    next()
+})
+
+//app.use("/api/v1/user", usersRouter)
+app.use("/api/v1", apiV1Router)
 
 export default app;
