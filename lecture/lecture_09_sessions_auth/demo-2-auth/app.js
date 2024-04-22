@@ -4,9 +4,13 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import sessions from 'express-session'
 
-// 	npm install https://gitpkg.now.sh/kylethayer/ms-identity-javascript-nodejs-tutorial-msal-node-v2-/Common/msal-node-wrapper?main
+// To install msal-node-wrapper, run:
+//     npm install https://gitpkg.now.sh/kylethayer/ms-identity-javascript-nodejs-tutorial-msal-node-v2-/Common/msal-node-wrapper?main
 
 import WebAppAuthProvider from 'msal-node-wrapper'
+// original msal-node-wrapper code is here 
+//    (https://github.com/Azure-Samples/ms-identity-javascript-nodejs-tutorial/tree/main/Common/msal-node-wrapper),
+//  but at the time of making this, the original code depends on outdated version of @azure/msal-node 
 
 const authConfig = {
 	auth: {
@@ -38,8 +42,15 @@ const __dirname = dirname(__filename);
 
 var app = express();
 
+// When you deploy to azure, your project will run on http://localhost inside a secure container, and the
+// container will convert the http://localhost requests to "https" requests at your url on the public internet
+//
+// By default, express doesn't trust the https in your site's url if it sees it is running on http://localhost,
+// and will switch any "https"s to "http"s
+// 
+// The code below tells express to trust the "https" in your site's url, so it will correctly
+// use "https" in the redirectUri on your deployed app
 app.enable('trust proxy')
-
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -72,6 +83,13 @@ app.get('/signout', (req, res, next) => {
     })(req, res, next);
 
 });
+
+/**
+ * This error handler is needed to catch interaction_required errors thrown by MSAL.
+ * Make sure to add it to your middleware chain after all your routers, but before any other 
+ * error handlers.
+ */
+
 app.use(authProvider.interactionErrorHandler());
 
 
