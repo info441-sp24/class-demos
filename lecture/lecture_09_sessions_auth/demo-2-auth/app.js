@@ -6,6 +6,8 @@ import sessions from 'express-session'
 
 // To install msal-node-wrapper, run:
 //     npm install https://gitpkg.now.sh/kylethayer/ms-identity-javascript-nodejs-tutorial-msal-node-v2-/Common/msal-node-wrapper?main
+// NOTE: Mac zsh shell seems to block this command as being sketchy (they are not wrong)
+//           instead try bash shell or another shell to do this npm install
 
 import WebAppAuthProvider from 'msal-node-wrapper'
 // original msal-node-wrapper code is here 
