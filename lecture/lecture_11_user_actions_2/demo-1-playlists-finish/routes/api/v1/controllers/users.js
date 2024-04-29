@@ -28,6 +28,18 @@ router.post("/", async (req, res) => {
     }
 })
 
+router.delete("/", async (req, res) => {
+    let userId = req.body.userId
+
+    // first delete playlists for the user
+    await req.models.Playlist.deleteMany({user: userId})
+    // delete user
+    await req.models.User.deleteOne({_id: userId})
+
+    res.json({status: "success"})
+    // Note: should add error handling
+})
+
 router.post("/bands", async(req, res) => {
     let userId = req.body.userId
     let band = req.body.band
