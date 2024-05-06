@@ -19,7 +19,7 @@ async function loadItems(){
         <hr>
         <div>
             <h3>Item: ${itemInfo.name}</h3>
-            <strong>Price: </strong>$${itemInfo.price}<br>
+            <strong>Price: </strong>$<span id="item_price_${itemInfo._id}">${itemInfo.price}</span><br>
             <strong>How many do you want?</strong> <input type="number" id="item_num_${itemInfo._id}" value=0 /> 
         </div>`
     }).join("<hr>")
@@ -32,7 +32,7 @@ async function checkout(){
     let cartInfo = allItemIds.map(itemId => {
         return {
             itemId: itemId,
-            itemCount: document.getElementById(`item_num_${itemId}`).value
+            itemCount: document.getElementById(`item_num_${itemId}`).value,
         }
     })
 
