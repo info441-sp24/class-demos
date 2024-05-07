@@ -1,0 +1,8 @@
+{
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".vscode{,/**}"
+  ],
+  "appService.defaultWebAppToDeploy": "/subscriptions/971ea2c0-45a9-41c6-b88f-69a3f54ebb84/resourceGroups/react-in-express_group/providers/Microsoft.Web/sites/react-in-express",
+  "appService.deploySubpath": "."
+}
